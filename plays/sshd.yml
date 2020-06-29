@@ -1,0 +1,7 @@
+---
+- name: configure ssh server
+  hosts: all
+  tasks:
+  - name: banner
+  - name: x11 fw
+  - name: maxauthtries is set to 3

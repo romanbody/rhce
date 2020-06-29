@@ -1,0 +1,14 @@
+---
+- name: welcome message
+  hosts: all
+  tasks:
+  - name: write content web
+    copy:
+      dest: /etc/motd
+      content: "Welcome to web server."
+    when: "'webservers' in {{group_names}}" 
+  - name: write content proxy
+    copy:
+      dest: /etc/motd
+      content: "Welcome to proxy server."
+    when: "'proxy' in {{group_names}}"

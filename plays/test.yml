@@ -7,5 +7,5 @@
       register: who
     - name: print
       debug:
-        msg: echo who
+        msg: echo {{who.stdout}}
 

@@ -3,5 +3,17 @@
   hosts: all
   tasks:
   - name: banner
-  - name: x11 fw
+    lineinfile: 
+      path: /etc/ssh/sshd_config
+      regexp: '^#Banner '
+      line: Banner /etc/ssh/ssh-banner3
+  - name: x11
+    lineinfile: 
+      path: /etc/ssh/sshd_config
+      regexp: '^#X11Forwarding'
+      line: X11Forwarding yes
   - name: maxauthtries is set to 3
+    lineinfile: 
+      path: /etc/ssh/sshd_config
+      regexp: '^#MaxAuthTries'
+      line: MaxAuthTries 3

@@ -1,0 +1,4 @@
+ansible all -a "useradd automation"
+ansible all -a "usermod -G wheel automation"
+ansible all -m shell -a "echo devops | passwd --stdin automation"
+

@@ -1,0 +1,11 @@
+---
+- name: test
+  hosts: all
+  tasks:
+    - name: test
+      shell: whoami
+      register: who
+    - name: print
+      debug:
+        msg: echo who
+

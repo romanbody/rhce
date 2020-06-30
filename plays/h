@@ -1,0 +1,435 @@
+> USER    (/root/.local/lib/python3.6/site-packages/ansible/modules/system/user.py)
+
+        Manage user accounts and user attributes. For Windows targets, use the [win_user] module
+        instead.
+
+  * This module is maintained by The Ansible Core Team
+OPTIONS (= is mandatory):
+
+- append
+        If `yes', add the user to the groups specified in `groups'.
+        If `no', user will only be added to the groups specified in `groups', removing them from all
+        other groups.
+        Mutually exclusive with `local'
+        [Default: False]
+        type: bool
+
+- authorization
+        Sets the authorization of the user.
+        Does nothing when used with other platforms.
+        Can set multiple authorizations using comma separation.
+        To delete all authorizations, use `authorization='''.
+        Currently supported on Illumos/Solaris.
+        [Default: (null)]
+        type: str
+        version_added: 2.8
+
+- comment
+        Optionally sets the description (aka `GECOS') of user account.
+        [Default: (null)]
+        type: str
+
+- create_home
+        Unless set to `no', a home directory will be made for the user when the account is created
+        or if the home directory does not exist.
+        Changed from `createhome' to `create_home' in Ansible 2.5.
+        (Aliases: createhome)[Default: True]
+        type: bool
+
+- expires
+        An expiry time for the user in epoch, it will be ignored on platforms that do not support
+        this.
+        Currently supported on GNU/Linux, FreeBSD, and DragonFlyBSD.
+        Since Ansible 2.6 you can remove the expiry time specify a negative value. Currently
+        supported on GNU/Linux and FreeBSD.
+        [Default: (null)]
+        type: float
+        version_added: 1.9
+
+- force
+        This only affects `state=absent', it forces removal of the user and associated directories
+        on supported platforms.
+        The behavior is the same as `userdel --force', check the man page for `userdel' on your
+        system for details and support.
+        When used with `generate_ssh_key=yes' this forces an existing key to be overwritten.
+        [Default: False]
+        type: bool
+
+- generate_ssh_key
+        Whether to generate a SSH key for the user in question.
+        This will *not* overwrite an existing SSH key unless used with `force=yes'.
+        [Default: False]
+        type: bool
+        version_added: 0.9
+
+- group
+        Optionally sets the user's primary group (takes a group name).
+        [Default: (null)]
+        type: str
+
+- groups
+        List of groups user will be added to. When set to an empty string `''', the user is removed
+        from all groups except the primary group.
+        Before Ansible 2.3, the only input format allowed was a comma separated string.
+        Mutually exclusive with `local'
+        [Default: (null)]
+        type: list
+
+- hidden
+        macOS only, optionally hide the user from the login window and system preferences.
+        The default will be `yes' if the `system' option is used.
+        [Default: (null)]
+        type: bool
+        version_added: 2.6
+
+- home
+        Optionally set the user's home directory.
+        [Default: (null)]
+        type: path
+
+- local
+        Forces the use of "local" command alternatives on platforms that implement it.
+        This is useful in environments that use centralized authentification when you want to
+        manipulate the local users (i.e. it uses `luseradd' instead of `useradd').
+        This will check `/etc/passwd' for an existing account before invoking commands. If the local
+        account database exists somewhere other than `/etc/passwd', this setting will not work
+        properly.
+        This requires that the above commands as well as `/etc/passwd' must exist on the target
+        host, otherwise it will be a fatal error.
+        Mutually exclusive with `groups' and `append'
+        [Default: False]
+        type: bool
+        version_added: 2.4
+
+- login_class
+        Optionally sets the user's login class, a feature of most BSD OSs.
+        [Default: (null)]
+        type: str
+
+- move_home
+        If set to `yes' when used with `home: ', attempt to move the user's old home directory to
+        the specified directory if it isn't there already and the old home exists.
+        [Default: False]
+        type: bool
+
+= name
+        Name of the user to create, remove or modify.
+        (Aliases: user)
+        type: str
+
+- non_unique
+        Optionally when used with the -u option, this option allows to change the user ID to a non-
+        unique value.
+        [Default: False]
+        type: bool
+        version_added: 1.1
+
+- password
+        Optionally set the user's password to this crypted value.
+        On macOS systems, this value has to be cleartext. Beware of security issues.
+        To create a disabled account on Linux systems, set this to `'!'' or `'*''.
+        To create a disabled account on OpenBSD, set this to `'*************''.
+        See https://docs.ansible.com/ansible/faq.html#how-do-i-generate-encrypted-passwords-for-the-
+        user-module for details on various ways to generate these password values.
+        [Default: (null)]
+        type: str
+
+- password_lock
+        Lock the password (usermod -L, pw lock, usermod -C).
+        BUT implementation differs on different platforms, this option does not always mean the user
+        cannot login via other methods.
+        This option does not disable the user, only lock the password. Do not change the password in
+        the same task.
+        Currently supported on Linux, FreeBSD, DragonFlyBSD, NetBSD, OpenBSD.
+        [Default: (null)]
+        type: bool
+        version_added: 2.6
+
+- profile
+        Sets the profile of the user.
+        Does nothing when used with other platforms.
+        Can set multiple profiles using comma separation.
+        To delete all the profiles, use `profile='''.
+        Currently supported on Illumos/Solaris.
+        [Default: (null)]
+        type: str
+        version_added: 2.8
+
+- remove
+        This only affects `state=absent', it attempts to remove directories associated with the
+        user.
+        The behavior is the same as `userdel --remove', check the man page for details and support.
+        [Default: False]
+        type: bool
+
+- role
+        Sets the role of the user.
+        Does nothing when used with other platforms.
+        Can set multiple roles using comma separation.
+        To delete all roles, use `role='''.
+        Currently supported on Illumos/Solaris.
+        [Default: (null)]
+        type: str
+        version_added: 2.8
+
+- seuser
+        Optionally sets the seuser type (user_u) on selinux enabled systems.
+        [Default: (null)]
+        type: str
+        version_added: 2.1
+
+- shell
+        Optionally set the user's shell.
+        On macOS, before Ansible 2.5, the default shell for non-system users was `/usr/bin/false'.
+        Since Ansible 2.5, the default shell for non-system users on macOS is `/bin/bash'.
+        On other operating systems, the default shell is determined by the underlying tool being
+        used. See Notes for details.
+        [Default: (null)]
+        type: str
+
+- skeleton
+        Optionally set a home skeleton directory.
+        Requires `create_home' option!
+        [Default: (null)]
+        type: str
+        version_added: 2.0
+
+- ssh_key_bits
+        Optionally specify number of bits in SSH key to create.
+        [Default: default set by ssh-keygen]
+        type: int
+        version_added: 0.9
+
+- ssh_key_comment
+        Optionally define the comment for the SSH key.
+        [Default: ansible-generated on $HOSTNAME]
+        type: str
+        version_added: 0.9
+
+- ssh_key_file
+        Optionally specify the SSH key filename.
+        If this is a relative filename then it will be relative to the user's home directory.
+        This parameter defaults to `.ssh/id_rsa'.
+        [Default: (null)]
+        type: path
+        version_added: 0.9
+
+- ssh_key_passphrase
+        Set a passphrase for the SSH key.
+        If no passphrase is provided, the SSH key will default to having no passphrase.
+        [Default: (null)]
+        type: str
+        version_added: 0.9
+
+- ssh_key_type
+        Optionally specify the type of SSH key to generate.
+        Available SSH key types will depend on implementation present on target host.
+        [Default: rsa]
+        type: str
+        version_added: 0.9
+
+- state
+        Whether the account should exist or not, taking action if the state is different from what
+        is stated.
+        (Choices: absent, present)[Default: present]
+        type: str
+
+- system
+        When creating an account `state=present', setting this to `yes' makes the user a system
+        account.
+        This setting cannot be changed on existing users.
+        [Default: False]
+        type: bool
+
+- uid
+        Optionally sets the `UID' of the user.
+        [Default: (null)]
+        type: int
+
+- update_password
+        `always' will update passwords if they differ.
+        `on_create' will only set the password for newly created users.
+        (Choices: always, on_create)[Default: always]
+        type: str
+        version_added: 1.3
+
+
+NOTES:
+      * There are specific requirements per platform on user management utilities. However
+        they generally come pre-installed with the system and Ansible will require they are
+        present at runtime. If they are not, a descriptive error message will be shown.
+      * On SunOS platforms, the shadow file is backed up automatically since this module edits
+        it directly. On other platforms, the shadow file is backed up by the underlying tools
+        used by this module.
+      * On macOS, this module uses `dscl' to create, modify, and delete accounts.
+        `dseditgroup' is used to modify group membership. Accounts are hidden from the login
+        window by modifying `/Library/Preferences/com.apple.loginwindow.plist'.
+      * On FreeBSD, this module uses `pw useradd' and `chpass' to create, `pw usermod' and
+        `chpass' to modify, `pw userdel' remove, `pw lock' to lock, and `pw unlock' to unlock
+        accounts.
+      * On all other platforms, this module uses `useradd' to create, `usermod' to modify, and
+        `userdel' to remove accounts.
+
+
+SEE ALSO:
+      * Module authorized_key
+           The official documentation on the authorized_key module.
+           https://docs.ansible.com/ansible/2.9/modules/authorized_key_module.html
+      * Module group
+           The official documentation on the group module.
+           https://docs.ansible.com/ansible/2.9/modules/group_module.html
+      * Module win_user
+           The official documentation on the win_user module.
+           https://docs.ansible.com/ansible/2.9/modules/win_user_module.html
+
+
+AUTHOR: Stephen Fromm (@sfromm)
+        METADATA:
+          status:
+          - stableinterface
+          supported_by: core
+        
+
+EXAMPLES:
+
+- name: Add the user 'johnd' with a specific uid and a primary group of 'admin'
+  user:
+    name: johnd
+    comment: John Doe
+    uid: 1040
+    group: admin
+
+- name: Add the user 'james' with a bash shell, appending the group 'admins' and 'developers' to the user's groups
+  user:
+    name: james
+    shell: /bin/bash
+    groups: admins,developers
+    append: yes
+
+- name: Remove the user 'johnd'
+  user:
+    name: johnd
+    state: absent
+    remove: yes
+
+- name: Create a 2048-bit SSH key for user jsmith in ~jsmith/.ssh/id_rsa
+  user:
+    name: jsmith
+    generate_ssh_key: yes
+    ssh_key_bits: 2048
+    ssh_key_file: .ssh/id_rsa
+
+- name: Added a consultant whose account you want to expire
+  user:
+    name: james18
+    shell: /bin/zsh
+    groups: developers
+    expires: 1422403387
+
+- name: Starting at Ansible 2.6, modify user, remove expiry time
+  user:
+    name: james18
+    expires: -1
+
+
+RETURN VALUES:
+
+append:
+  description: Whether or not to append the user to groups
+  returned: When state is 'present' and the user exists
+  type: bool
+  sample: True
+comment:
+  description: Comment section from passwd file, usually the user name
+  returned: When user exists
+  type: str
+  sample: Agent Smith
+create_home:
+  description: Whether or not to create the home directory
+  returned: When user does not exist and not check mode
+  type: bool
+  sample: True
+force:
+  description: Whether or not a user account was forcibly deleted
+  returned: When state is 'absent' and user exists
+  type: bool
+  sample: False
+group:
+  description: Primary user group ID
+  returned: When user exists
+  type: int
+  sample: 1001
+groups:
+  description: List of groups of which the user is a member
+  returned: When C(groups) is not empty and C(state) is 'present'
+  type: str
+  sample: 'chrony,apache'
+home:
+  description: "Path to user's home directory"
+  returned: When C(state) is 'present'
+  type: str
+  sample: '/home/asmith'
+move_home:
+  description: Whether or not to move an existing home directory
+  returned: When C(state) is 'present' and user exists
+  type: bool
+  sample: False
+name:
+  description: User account name
+  returned: always
+  type: str
+  sample: asmith
+password:
+  description: Masked value of the password
+  returned: When C(state) is 'present' and C(password) is not empty
+  type: str
+  sample: 'NOT_LOGGING_PASSWORD'
+remove:
+  description: Whether or not to remove the user account
+  returned: When C(state) is 'absent' and user exists
+  type: bool
+  sample: True
+shell:
+  description: User login shell
+  returned: When C(state) is 'present'
+  type: str
+  sample: '/bin/bash'
+ssh_fingerprint:
+  description: Fingerprint of generated SSH key
+  returned: When C(generate_ssh_key) is C(True)
+  type: str
+  sample: '2048 SHA256:aYNHYcyVm87Igh0IMEDMbvW0QDlRQfE0aJugp684ko8 ansible-generated on host (RSA)'
+ssh_key_file:
+  description: Path to generated SSH private key file
+  returned: When C(generate_ssh_key) is C(True)
+  type: str
+  sample: /home/asmith/.ssh/id_rsa
+ssh_public_key:
+  description: Generated SSH public key file
+  returned: When C(generate_ssh_key) is C(True)
+  type: str
+  sample: >
+    'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC95opt4SPEC06tOYsJQJIuN23BbLMGmYo8ysVZQc4h2DZE9ugbjWWGS1/pweUGjVstgzMkBEeBCByaEf/RJKNecKRPeGd2Bw9DCj/bn5Z6rGfNENKBmo
+    618mUJBvdlEgea96QGjOwSB7/gmonduC7gsWDMNcOdSE3wJMTim4lddiBx4RgC9yXsJ6Tkz9BHD73MXPpT5ETnse+A3fw3IGVSjaueVnlUyUmOBf7fzmZbhlFVXf2Zi2rFTXqvbdGHKkzpw1U8eB8xFPP7y
+    d5u1u0e6Acju/8aZ/l17IDFiLke5IzlqIMRTEbDwLNeO84YQKWTm9fODHzhYe0yvxqLiK07 ansible-generated on host'
+stderr:
+  description: Standard error from running commands
+  returned: When stderr is returned by a command that is run
+  type: str
+  sample: Group wheels does not exist
+stdout:
+  description: Standard output from running commands
+  returned: When standard output is returned by the command that is run
+  type: str
+  sample:
+system:
+  description: Whether or not the account is a system account
+  returned: When C(system) is passed to the module and the account does not exist
+  type: bool
+  sample: True
+uid:
+  description: User ID of the user account
+  returned: When C(UID) is passed to the module
+  type: int
+  sample: 1044
+

@@ -1,0 +1,26 @@
+---
+- name: create users
+  hosts: all
+  become: true
+  vars_files:
+  - user_list.yml
+  tasks:
+    - name: create user - for proxy
+      user:
+        name: "{{ item.username }}"
+        uid: "{{ item.uid }}"
+        shell: /bin/bash
+        group: wheel
+        password: devops
+      when: "'proxy' in {{ group_names }} and ({{ item.uid }} | string)[0] | int == 1"
+      loop: "{{ users }}"
+    - name: create user - for webserver
+      user:
+        name: "{{ item.username }}"
+        uid: "{{ item.uid }}"
+        shell: /bin/bash
+        group: wheel
+        password: devops
+      when: "'webservers' in {{ group_names }} and ({{ item.uid }} | string)[0] | int == 2"
+      loop: "{{ users }}"
+

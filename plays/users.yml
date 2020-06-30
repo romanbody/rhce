@@ -11,7 +11,8 @@
         uid: "{{ item.uid }}"
         shell: /bin/bash
         group: wheel
-        password: devops
+        password: "{{ 'devops' | password_hash('sha512') }}"
+        update_password: always
       when: "'proxy' in {{ group_names }} and ({{ item.uid }} | string)[0] | int == 1"
       loop: "{{ users }}"
     - name: create user - for webserver
@@ -20,7 +21,8 @@
         uid: "{{ item.uid }}"
         shell: /bin/bash
         group: wheel
-        password: devops
+        password: "{{ 'devops' | password_hash('sha512') }}"
+        update_password: always
       when: "'webservers' in {{ group_names }} and ({{ item.uid }} | string)[0] | int == 2"
       loop: "{{ users }}"
 

@@ -1,0 +1,12 @@
+---
+- name: create users
+  hosts: all
+  become: true
+  vars_files:
+  - user_list.yml
+  - secret.yml
+  tasks:
+    - name: create users 
+      include_tasks: users_include.yml
+      loop: "{{ users }}"
+     

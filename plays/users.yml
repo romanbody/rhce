@@ -4,6 +4,7 @@
   become: true
   vars_files:
   - user_list.yml
+  - secret.yml
   tasks:
     - name: create user - for proxy
       user:
@@ -11,18 +12,32 @@
         uid: "{{ item.uid }}"
         shell: /bin/bash
         group: wheel
-        password: "{{ 'devops' | password_hash('sha512') }}"
+        password: "{{ user_password | password_hash('sha512') }}"
         update_password: always
       when: "'proxy' in {{ group_names }} and ({{ item.uid }} | string)[0] | int == 1"
       loop: "{{ users }}"
+
     - name: create user - for webserver
       user:
         name: "{{ item.username }}"
         uid: "{{ item.uid }}"
         shell: /bin/bash
         group: wheel
-        password: "{{ 'devops' | password_hash('sha512') }}"
+        password: "{{ user_password | password_hash('sha512') }}"
         update_password: always
       when: "'webservers' in {{ group_names }} and ({{ item.uid }} | string)[0] | int == 2"
+      loop: "{{ users }}" 
+      
+    - name: copy authorized keys - for proxy
+      authorized_key:
+        user: "{{ item.username }}"
+        key: "{{ lookup('file','~/.ssh/id_rsa.pub') }}"
+      when: "'proxy' in {{ group_names }} and ({{ item.uid }} | string)[0] | int == 1" 
       loop: "{{ users }}"
 
+    - name: copy authorized keys - for webserver
+      authorized_key:
+        user: "{{ item.username }}"
+        key: "{{ lookup('file','~/.ssh/id_rsa.pub') }}"
+      when: "'webservers' in {{ group_names }} and ({{ item.uid }} | string)[0] | int == 2" 
+      loop: "{{ users }}"     

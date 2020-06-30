@@ -1,19 +1,30 @@
 ---
 - name: configure ssh server
   hosts: all
+  become: yes
   tasks:
-  - name: banner
+  - name: banner change default
     lineinfile: 
       path: /etc/ssh/sshd_config
-      regexp: '^#Banner '
+      regexp: '^(.*)Banner '
       line: Banner /etc/ssh/ssh-banner3
-  - name: x11
+      state: present
+      backup: yes
+  - name: x11 to yes
     lineinfile: 
       path: /etc/ssh/sshd_config
-      regexp: '^#X11Forwarding'
+      regexp: '^(.*)X11Forwarding'
       line: X11Forwarding yes
+      state: present
+      backup: yes
   - name: maxauthtries is set to 3
     lineinfile: 
       path: /etc/ssh/sshd_config
-      regexp: '^#MaxAuthTries'
+      regexp: '^(.*)MaxAuthTries'
       line: MaxAuthTries 3
+      state: present
+      backup: yes
+  - name: restart service
+    service:
+      name: sshd
+      state: restarted

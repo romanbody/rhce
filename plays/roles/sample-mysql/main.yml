@@ -1,0 +1,47 @@
+---
+- name: test
+  hosts: localhost
+  vars:
+    database_password: devops
+  tasks:
+  - name: create partition
+    parted:
+      device: /dev/sda
+      number: 5
+      state: info
+      part_start: 250GiB
+      part_end: 260GiB
+  - name: create lvg
+    lvg:
+      vg: vg_database
+      pvs: /dev/sda5
+  - name: create lvol
+    lvol:
+      vg: vg_database
+      lv: lv_mysql
+      size: 512M
+  - name: make fs
+    filesystem:
+      fstype: xfs
+      dev: /dev/vg_database/lv_mysql            
+  - name: mount
+    mount:
+      path: /mnt/mysql_backups
+      src: /dev/vg_database/lv_mysql
+      fstype: xfs
+      state: mounted
+  - name: mysql install
+    yum:
+      name:
+        - mysql-server
+      state: present
+#  - name: change passowrd
+#    mysql_user:
+#      name: root
+#      password: "{{database_password}}"
+#      check_implicit_admin: true
+  - name: create .my.cnf
+    template:
+      src: ".my.cnf.j2"
+      dest: "/root/.my.cnf"
+

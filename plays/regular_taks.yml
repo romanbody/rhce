@@ -1,0 +1,13 @@
+---
+- name: add cron job
+  hosts: localhost
+  tasks:
+  - name: debug
+    debug:
+      msg: test
+  - name: add cron job
+    cron: 
+      name: "time log"
+      hour: "*"
+      minute: "0"
+      job: "date >> /var/log/time.log"

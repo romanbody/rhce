@@ -1,0 +1,15 @@
+---
+- name: backup
+  hosts: ansible1
+  tasks:
+    - name: create file
+      copy:
+        dest: /mnt/mysql_backups/database_list.txt
+        content: |
+          dev,test,qa, prod
+    - name: create archive
+      archive:
+        path: /mnt/mysql_backups/database_list.txt
+        dest: /mnt/mysql_backups/database_list.gz
+        format: gz
+        force_archive: true

@@ -1,0 +1,8 @@
+---
+- hosts: localhost
+  become: true
+  tasks:
+    - import_role:
+        name: sample-mysql
+
+

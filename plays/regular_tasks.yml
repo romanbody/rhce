@@ -1,0 +1,7 @@
+---
+- name: reg tasks
+  hosts: proxy
+  tasks:
+  - name: test
+    debug:
+      msg: "hallo"

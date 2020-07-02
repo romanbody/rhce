@@ -1,0 +1,49 @@
+---
+#tasks file for sample-apache
+- name: install and enable httpd, mod_ssl, phph
+  yum:
+    name: "{{ packages }}"
+  vars:
+    packages:
+      - httpd
+      - mod_ssl
+      - php
+- name: enable and start service
+  systemd:
+    name: httpd
+    state: restarted
+    enabled: yes
+
+- name: firewall http
+  firewalld:
+    service: http
+    permanent: yes
+    state: enabled
+
+- name: firewall https
+  firewalld:
+    service: https
+    permanent: yes
+    state: enabled
+
+- name: restart service
+  systemd:
+    name: firewalld
+    state: restarted
+
+- name: create index html
+  template:
+    src: index.html.j2
+    dest: /var/www/html/index.html
+  register: change_index_result
+
+- name: enable and start service in case of change index
+  systemd:
+    name: httpd
+    state: restarted
+    enabled: yes
+  when: change_index_result.changed
+
+
+
+

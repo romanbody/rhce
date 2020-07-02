@@ -1,0 +1,6 @@
+---
+- name: user apache role
+  hosts: ansible1
+  become: true
+  roles:
+    - sample-apache

@@ -1,0 +1,13 @@
+---
+- name: proxy
+  hosts: ansible1
+  vars:
+    haproxy_backend_balance_method: 'roundrobin'
+    haproxy_backend_servers:
+      - name: app1
+        address: ansible1
+      - name: app2
+        address: ansible2
+  roles:
+  - geerlingguy.haproxy
+

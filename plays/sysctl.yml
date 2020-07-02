@@ -1,0 +1,17 @@
+---
+- name: check mem
+  hosts: all
+  tasks:
+    - name: change param
+      sysctl:
+        name: wm.swappiness
+        value: '10'
+        state: present
+        sysctl_file: /etc/sysctl.conf        
+      when: ansible_memtotal_mb > 1024
+
+    - name: assert ram
+      assert:
+        that:
+          - ansible_memtotal_mb > 2048
+        fail_msg: "host does not have more then 2048MB RAM"

@@ -1,0 +1,8 @@
+---
+- name: selinux
+  hosts: all
+  vars:
+    - { name: 'httpd_can_network_connect', state: 'yes', persistent: 'yes' }
+  roles:
+    - linux-system-roles.selinux
+

@@ -1,0 +1,17 @@
+---
+- name: create cutom fact
+  hosts: all
+  vars:
+    dest_dir: /etc/ansible/facts.d
+    fact_file: custom.fact
+  tasks:
+    - name: create dir
+      file: 
+        state: directory
+        recurse: yes
+        path: /etc/ansible/facts.d
+    - name: install new fats
+      copy:
+        src: "{{ fact_file }}"
+        dest: "{{ dest_dir }}"
+

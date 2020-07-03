@@ -35,15 +35,21 @@
   template:
     src: index.html.j2
     dest: /var/www/html/index.html
-  register: change_index_result
+  notify: restart httpd
+#  register: change_index_result
 
-- name: enable and start service in case of change index
-  systemd:
-    name: httpd
-    state: restarted
-    enabled: yes
-  when: change_index_result.changed
+#- name: enable and start service in case of change index
+#  systemd:
+#    name: httpd
+#    state: restarted
+#    enabled: yes
+#  when: change_index_result.changed
 
+handlers:
+  - name: restart httpd
+    service:
+      name: httpd
+      state: restarted
 
 
 

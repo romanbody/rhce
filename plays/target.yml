@@ -1,0 +1,6 @@
+---
+- name: change target
+  hosts: ansible1
+  tasks: 
+    - name: change to multiuser
+      shell: systemctl set-default multi-user.target

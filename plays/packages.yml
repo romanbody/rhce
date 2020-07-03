@@ -1,0 +1,20 @@
+---
+- name: proxy
+  hosts: proxy
+  tasks:
+    - name: tcpdump and mailx
+      yum:
+        name: 
+          - tcpdump
+          - mailx
+        state: present
+- name: db
+  hosts: proxy
+  tasks: 
+    - name: lsof and mailx
+      yum:
+        name: 
+          - lsof
+          - mailx
+        state: present
+    

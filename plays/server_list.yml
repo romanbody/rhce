@@ -1,0 +1,11 @@
+---
+- name: create server list
+  hosts: all
+  tasks:
+    - name: create sevrer list from template 
+      template:
+        src: server_list.j2
+        dest: /etc/server.list
+        mode: 0600
+        setype: net_conf_t
+      when: "'proxy' in {{ group_names }}"

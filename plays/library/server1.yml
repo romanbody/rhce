@@ -1,0 +1,6 @@
+- name: test1
+  hosts: localhost
+  tasks:
+    - name: debug1
+      debug:
+        msg: " {{ ansible_facts.fqdn}} "

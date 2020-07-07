@@ -2,9 +2,9 @@
 - name: show facts
   hosts: localhost 
   vars:
-    - myvar:
-        name: varname
-        uid: 123456
+    myvar:
+      name: varname
+      uid: 123456
   tasks:
     - name: show fact
       debug:
@@ -18,10 +18,45 @@
     - name: show global var
       debug:
         msg: " {{ group_var1 }} "
+    - name: loop with items
+      debug:
+        msg: " {{ item }} "
+      with_items: 
+        - 1
+        - [2,3]
+        - 4
+    - name: loop basic with block, rescue, always and notify
+      block:
+        - name: loop basic with loop
+          debug:
+            msg: " loop: index is: {{ index }} and value is: {{ item }} "
+          #with_items: " {{ group_var_list }} "
+          loop: " {{ group_var_list|flatten(levels=1) }} "
+          loop_control:
+            index_var: index
+      rescue: 
+        - name: loop basic with with_items
+          debug:
+            msg: " with items: index is: {{ index }} and value is: {{ item }} "
+          with_items: " {{ group_var_list }} "
+          loop_control:
+            index_var: index
+      always:
+        - name: after loop
+          debug:
+            msg: after loop
+          changed_when: yes
+          notify: saydone
+      #ignore_errors: True
+    - name: show global var list
+      debug:
+        msg: " {{ group_var_list[1].userId }} "   # group var list
     - name: show only if in proxy
       debug:
         msg: i am in proxy
       when: "'proxy' in group_names|string "
+    - import_tasks: library/webserver_lib.yml
+    - include_tasks: library/webserver_lib.yml
   handlers:
     - name: saydone
       debug:

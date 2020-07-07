@@ -1,1 +1,8 @@
 group_var1: group variable
+group_var_list:
+  - userName: roman
+    userId: 123
+  - userName: lucia
+    userId: 456
+  - userName: hanka
+    userId: 789

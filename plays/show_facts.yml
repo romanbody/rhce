@@ -1,0 +1,28 @@
+---
+- name: show facts
+  hosts: localhost 
+  vars:
+    - myvar:
+        name: varname
+        uid: 123456
+  tasks:
+    - name: show fact
+      debug:
+        msg: "{{ ansible_facts.fqdn }} "
+      notify:
+        - saydone
+      ignore_errors: True
+    - name: show local vars
+      debug:
+        msg: " {{ myvar.uid }} "
+    - name: show global var
+      debug:
+        msg: " {{ group_var1 }} "
+    - name: show only if in proxy
+      debug:
+        msg: i am in proxy
+      when: "'proxy' in group_names|string "
+  handlers:
+    - name: saydone
+      debug:
+        msg: done 

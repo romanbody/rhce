@@ -1,0 +1,10 @@
+[proxy]
+ansible1
+localhost 
+
+[webservers]
+ansible2
+
+[database]
+ansible2
+

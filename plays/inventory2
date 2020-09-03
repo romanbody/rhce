@@ -8,3 +8,5 @@ ansible2
 [database]
 ansible2
 
+[superset]
+ansible3

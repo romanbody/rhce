@@ -1,0 +1,7 @@
+---
+- name: demo lookups
+  tasks:
+    - name: template with lookup2
+      template:
+        src: lookup.j2
+        dest: /etc/lookup.demo

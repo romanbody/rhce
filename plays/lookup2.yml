@@ -1,5 +1,6 @@
 ---
 - name: demo lookups
+  hosts: all
   tasks:
     - name: template with lookup2
       template:

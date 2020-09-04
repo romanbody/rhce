@@ -1,5 +1,6 @@
 ---
 - name: demo lookups
+  hosts: all
   tasks:
     - name: lookup of a csv file
       debug: msg="{{ lookup('csvfile','dinner file=gamma.csv delimiter=, col=2') }}"

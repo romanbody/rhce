@@ -18,13 +18,13 @@ Define inventory:
 
 With groups:
 * webserver
-** ansible1
-** ansible2
+  ** ansible1
+  ** ansible2
 * proxy
-** ansible3
+  ** ansible3
 * dbserver
-** ansible4
-** ansible5
+  ** ansible4
+  ** ansible5
 * test 
 ** ansible4
 * production

@@ -6,3 +6,5 @@ group_var_list:
     userId: 456
   - userName: hanka
     userId: 789
+
+motd_welcome: Welcome to demo infrastructure    

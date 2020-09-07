@@ -1,2 +1,10 @@
 req_packages:
     - postgresql
+
+open_ports:
+    - 5432
+    - 80
+
+open_hosts:
+    - ansible1
+    - ansible2

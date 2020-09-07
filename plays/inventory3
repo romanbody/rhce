@@ -1,18 +1,19 @@
-localhost 
+ 
 
 [webservers]
 ansible1
 ansible2
-
-[dbservers]
-ansible5
-ansible4
 
 [proxy]
 ansible3 
 
 [test]
 ansible4
+localhost
 
 [production]
 ansible5
+
+[dbservers:children]
+test
+production

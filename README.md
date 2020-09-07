@@ -1,5 +1,5 @@
 - [EX284 preparation](#ex284-preparation)
-- [EX447](#ex447)
+- [EX447 preparation](#ex447-preparation)
   - [Git](#git)
   - [Manage inventory variables](#manage-inventory-variables)
   - [Lookup](#lookup)
@@ -10,9 +10,9 @@
   - [Lunch job with API](#lunch-job-with-api)
 
 # EX284 preparation 
-rhce preparation files
+RHCE preparation files
 
-# EX447
+# EX447 preparation
 Ex447 preparation files
 
 ## Git
@@ -68,6 +68,10 @@ Ansible5 as db production server will have following variables:
 
 Use special variables:
 * define ansible5 host with specific connection - IP and custom user name for db production server
+
+```
+ Debug output variables - var_debug.yml 
+```
 
 ## Lookup
 

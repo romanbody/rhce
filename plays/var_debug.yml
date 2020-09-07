@@ -1,0 +1,19 @@
+- name: Debug output variables  
+  hosts: all
+  tasks:  
+    - name: MOTD
+      debug:
+        msg: "{{motd_welcome}}"
+      when: "motd_welcome is defined"
+
+    - name: Required packages
+      debug:
+        msg: "{{item}}"
+      loop: "{{req_packages}}"
+      when: "req_packages is defined"
+
+    - name: Open ports for DB
+      debug:
+        msg: "{{item}}"
+      loop: "{{open_ports}}"
+      when: "open_ports is defined"      

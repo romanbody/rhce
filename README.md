@@ -1,3 +1,14 @@
+- [EX284 preparation](#ex284-preparation)
+- [EX447](#ex447)
+  - [Git](#git)
+  - [Manage inventory variables](#manage-inventory-variables)
+  - [Lookup](#lookup)
+  - [https://liquidat.wordpress.com/2016/02/09/howto-looking-up-external-directories-in-ansible/](#httpsliquidatwordpresscom20160209howto-looking-up-external-directories-in-ansible)
+  - [Filters and testing and network](#filters-and-testing-and-network)
+  - [Delegation](#delegation)
+  - [Dynamic inventory](#dynamic-inventory)
+  - [Lunch job with API](#lunch-job-with-api)
+
 # EX284 preparation 
 rhce preparation files
 

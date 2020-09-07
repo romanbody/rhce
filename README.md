@@ -18,17 +18,17 @@ Define inventory:
 
 With groups:
 * webserver
-  ** ansible1
-  ** ansible2
+  * ansible1
+  * ansible2
 * proxy
-  ** ansible3
+  * ansible3
 * dbserver
-  ** ansible4
-  ** ansible5
+  * ansible4
+  * ansible5
 * test 
-** ansible4
+ * ansible4
 * production
-** ansible5
+ * ansible5
 
 
 
@@ -38,11 +38,11 @@ Define variables based on:
 
 Hosts in webserer group will use following variable with list of packages:
 * req_packages
-** httpd
+ * httpd
 
 Hosts in dbserver group will use following variable with list of packages:
 * req_packages
-** portsgresql
+ * portsgresql
 
 All hosts will use following variable:
 * motd_welcome

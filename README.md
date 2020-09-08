@@ -5,7 +5,8 @@
   - [Git](#git)
   - [Manage inventory variables](#manage-inventory-variables)
   - [Lookup](#lookup)
-  - [https://liquidat.wordpress.com/2016/02/09/howto-looking-up-external-directories-in-ansible/](#httpsliquidatwordpresscom20160209howto-looking-up-external-directories-in-ansible)
+    - [Lookiup in CSV](#lookiup-in-csv)
+  - [Create enable_ports.yml file, which will loop trough CSV file and enable ports specified ports in specific group.](#create-enable_portsyml-file-which-will-loop-trough-csv-file-and-enable-ports-specified-ports-in-specific-group)
   - [Filters and testing and network](#filters-and-testing-and-network)
   - [Delegation](#delegation)
   - [Dynamic inventory](#dynamic-inventory)
@@ -79,14 +80,23 @@ Use special variables:
 ## Lookup
 
 https://liquidat.wordpress.com/2016/02/09/howto-looking-up-external-directories-in-ansible/
----
-- name: demo lookups
-  hosts: neon
-tasks:
-    - name: lookup of a csv file
-      debug: msg="{{ lookup('csvfile','dinner file=gamma.csv delimiter=, col=2') }}"
 
 ### Lookiup in CSV
+
+Use following CSV sample file: gamma.csv
+groupname,port,enabled
+webserevers,8080,yes
+webserevers,80,yes
+dbservers,8080,no
+dbservers,80,no
+
+Create enable_ports.yml file, which will loop trough CSV file and enable ports specified ports in specific group.
+  ---
+  - name: demo lookups
+    hosts: all
+    tasks:
+      - name: lookup of a csv file
+        debug: msg="{{ lookup('csvfile','dinner file=gamma.csv delimiter=, col=2') }}"
 
 
 

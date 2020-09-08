@@ -1,6 +1,6 @@
 - [EX284 preparation](#ex284-preparation)
-<<<<<<< HEAD
-- [EX447](#ex447)
+
+- [EX284 preparation](#ex284-preparation)
 - [EX447 preparation](#ex447-preparation)
   - [Git](#git)
   - [Manage inventory variables](#manage-inventory-variables)
@@ -84,6 +84,10 @@ https://liquidat.wordpress.com/2016/02/09/howto-looking-up-external-directories-
 tasks:
     - name: lookup of a csv file
       debug: msg="{{ lookup('csvfile','dinner file=gamma.csv delimiter=, col=2') }}"
+
+### Lookiup in CSV
+
+
 
 
 ## Filters and testing and network

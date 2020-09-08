@@ -144,12 +144,14 @@ Show public network IPV4 address , use ip filter
 
 
 ## Delegation
-https://docs.ansible.com/ansible/latest/user_guide/playbooks_delegation.html
+
+Docs: https://docs.ansible.com/ansible/latest/user_guide/playbooks_delegation.html
 
 Create new rolling_update.yml file, with folowing steps:
+
 1. run activity on 50% of webservers
-2. take out these servers from proxy pool
-3. deploy new html 
+2. take out these servers from proxy pool (user any list, e.g /etc/serverlist )
+3. deploy new content (html or any other file)
 4. take server back to pool
 
 ## Dynamic inventory

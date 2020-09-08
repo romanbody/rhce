@@ -22,14 +22,14 @@
         content: "new message {{ inventory_hostname }}"
         dest: /etc/test
 
-    - name: take out these servers from proxy pool
+    - name: take back these servers from proxy pool
       lineinfile:
         path: /etc/serverlist
         regexp: "^{{inventory_hostname}}"
         line: "{{inventory_hostname}}"
         state: present 
 
-    - name: take out these servers from proxy pool
+    - name: take back these servers from proxy pool
       command: "cat /etc/serverlist"
       register: cmdout
       delegate_to: ansible3

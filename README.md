@@ -72,7 +72,8 @@ Use special variables:
 * define ansible5 host with specific connection - IP and custom user name for db production server
 
 ```
- Debug output variables - var_debug.yml 
+ Debug output variables - var_debug.yml:
+ ansible-playbook -i inventory3 var_debug.yml
 ```
 
 ## Lookup
@@ -86,6 +87,7 @@ tasks:
       debug: msg="{{ lookup('csvfile','dinner file=gamma.csv delimiter=, col=2') }}"
 
 ### Lookiup in CSV
+
 
 
 

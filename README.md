@@ -1,4 +1,6 @@
 - [EX284 preparation](#ex284-preparation)
+<<<<<<< HEAD
+- [EX447](#ex447)
 - [EX447 preparation](#ex447-preparation)
   - [Git](#git)
   - [Manage inventory variables](#manage-inventory-variables)

@@ -1,2 +1,9 @@
 req_packages:
     - httpd
+
+
+open_ports:
+    - 8080
+
+open_hosts:
+    - ansible3    

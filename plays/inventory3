@@ -3,16 +3,16 @@
 [webservers]
 ansible1
 ansible2
+localhost
 
 [proxy]
 ansible3 
 
 [test]
 ansible4
-localhost
 
 [production]
-ansible5
+ansible5 ansible_host=127.0.0.1
 
 [dbservers:children]
 test

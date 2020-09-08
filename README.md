@@ -70,7 +70,8 @@ Use special variables:
 * define ansible5 host with specific connection - IP and custom user name for db production server
 
 ```
- Debug output variables - var_debug.yml 
+ Debug output variables - var_debug.yml:
+ ansible-playbook -i inventory3 var_debug.yml
 ```
 
 ## Lookup
@@ -82,6 +83,7 @@ https://liquidat.wordpress.com/2016/02/09/howto-looking-up-external-directories-
 tasks:
     - name: lookup of a csv file
       debug: msg="{{ lookup('csvfile','dinner file=gamma.csv delimiter=, col=2') }}"
+
 
 
 ## Filters and testing and network

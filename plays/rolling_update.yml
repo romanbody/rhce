@@ -1,0 +1,40 @@
+- name: rolling update
+  hosts: webservers
+  serial: 50%
+  tasks:
+    - name: take out these servers from proxy pool
+      lineinfile:
+        path: /etc/serverlist
+        regexp: "^{{inventory_hostname}}"
+        state: absent
+
+    - name: take out these servers from proxy pool
+      command: "cat /etc/serverlist"
+      register: cmdout
+      delegate_to: ansible3
+
+    - name: check 
+      debug:
+        msg: "{{cmdout.stdout}}"
+
+    - name: new file
+      copy:
+        content: "new message {{ inventory_hostname }}"
+        dest: /etc/test
+
+    - name: take out these servers from proxy pool
+      lineinfile:
+        path: /etc/serverlist
+        regexp: "^{{inventory_hostname}}"
+        line: "{{inventory_hostname}}"
+        state: present 
+
+    - name: take out these servers from proxy pool
+      command: "cat /etc/serverlist"
+      register: cmdout
+      delegate_to: ansible3
+
+    - name: check 
+      debug:
+        msg: "{{cmdout.stdout}}"
+      

@@ -1,12 +1,12 @@
  
 
 [webservers]
-ansible1
-ansible2
+ansible1 ansible_host=127.0.0.1
+ansible2 ansible_host=127.0.0.1
 localhost
 
 [proxy]
-ansible3 
+ansible3 ansible_host=127.0.0.1
 
 [test]
 ansible4

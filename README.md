@@ -7,6 +7,8 @@
   - [Lookup](#lookup)
     - [Lookiup in CSV](#lookiup-in-csv)
   - [Filters and testing and network](#filters-and-testing-and-network)
+    - [Create users based on json, using filters](#create-users-based-on-json-using-filters)
+    - [Using wilter with  network address](#using-wilter-with-network-address)
   - [Delegation](#delegation)
   - [Dynamic inventory](#dynamic-inventory)
   - [Lunch job with API](#lunch-job-with-api)
@@ -105,8 +107,50 @@ https://docs.ansible.com/ansible/latest/user_guide/playbooks_filters.html
 https://docs.ansible.com/ansible/latest/user_guide/playbooks_tests.html
 https://docs.ansible.com/ansible/latest/user_guide/playbooks_filters_ipaddr.html
 
+### Create users based on json, using filters
+
+Use following variable:
+
+    - usersonhosts: {
+      userlist: [
+        {
+        name: "alice",
+        group: "ws",
+        uid: 1201
+      },
+      {
+        name: "vincent",
+        group: "ws",
+        uid: 1202
+      },
+      {
+        name: "sandy",
+        group: "db",
+        uid: 2201
+      },
+      {
+        name: "patrick",
+        group: "db",
+        uid: 2202
+      }
+      ]
+    }
+
+Create users on ws or db servers based on groups. Use filter function and lookup.
+
+### Using wilter with  network address
+
+Show public network IPV4 address , use ip filter 
+
+
 ## Delegation
 https://docs.ansible.com/ansible/latest/user_guide/playbooks_delegation.html
+
+Create new rolling_update.yml file, with folowing steps:
+1. run activity on 50% of webservers
+2. take out these servers from proxy pool
+3. deploy new html 
+4. take server back to pool
 
 ## Dynamic inventory
 https://docs.ansible.com/ansible/latest/dev_guide/developing_inventory.html#inventory-source-common-format

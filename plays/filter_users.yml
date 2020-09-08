@@ -1,0 +1,39 @@
+---
+- name: filter users
+  hosts: localhost
+  vars:
+    - usersonhosts: {
+      userlist: [
+        {
+        name: "alice",
+        group: "ws",
+        uid: 1201
+      },
+      {
+        name: "vincent",
+        group: "ws",
+        uid: 1202
+      },
+      {
+        name: "sandy",
+        group: "db",
+        uid: 2201
+      },
+      {
+        name: "patrick",
+        group: "db",
+        uid: 2202
+      }
+      ]
+    }
+  tasks:  
+    - name: Create user
+      debug:
+        msg: "Create user {{item.name}} with uid {{item.uid}}"
+      loop: "{{ usersonhosts | json_query('userlist[?group==`ws`]') }}"
+
+    - name: Show public network address
+      debug:
+        msg: "{{ ansible_all_ipv4_addresses | ipaddr('public') }}"
+      
+  

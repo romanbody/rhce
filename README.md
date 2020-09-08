@@ -6,7 +6,6 @@
   - [Manage inventory variables](#manage-inventory-variables)
   - [Lookup](#lookup)
     - [Lookiup in CSV](#lookiup-in-csv)
-  - [Create enable_ports.yml file, which will loop trough CSV file and enable ports specified ports in specific group.](#create-enable_portsyml-file-which-will-loop-trough-csv-file-and-enable-ports-specified-ports-in-specific-group)
   - [Filters and testing and network](#filters-and-testing-and-network)
   - [Delegation](#delegation)
   - [Dynamic inventory](#dynamic-inventory)
@@ -91,14 +90,13 @@ dbservers,8080,no
 dbservers,80,no
 
 Create enable_ports.yml file, which will loop trough CSV file and enable ports specified ports in specific group.
-  ---
-  - name: demo lookups
-    hosts: all
-    tasks:
-      - name: lookup of a csv file
-        debug: msg="{{ lookup('csvfile','dinner file=gamma.csv delimiter=, col=2') }}"
 
-
+    ---
+    - name: demo lookups
+      hosts: all
+      tasks:
+        - name: lookup of a csv file
+          debug: msg="{{ lookup('csvfile','webservers file=gamma.csv delimiter=, col=2') }}"
 
 
 

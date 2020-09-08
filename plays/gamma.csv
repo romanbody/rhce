@@ -1,5 +1,3 @@
-groupname,port,enabled
-webserevers,8080,yes
-webserevers,80,yes
-dbservers,8080,no
-dbservers,80,no
+groupname,enableremote,enableagent, enableports
+webservers,yes,no,yes
+dbservers,yes,yes,no

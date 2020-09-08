@@ -1,0 +1,30 @@
+---
+- name: enable ports based on csv
+  hosts: localhost
+  vars:
+      ws_enable_ports: "{{ lookup('csvfile', 'webservers file=gamma.csv delimiter=, col=3') }}"
+      db_enable_ports: "{{ lookup('csvfile', 'dbservers file=gamma.csv delimiter=, col=3') }}"
+
+      ws_enable_agents: "{{ lookup('csvfile', 'webservers file=gamma.csv delimiter=, col=2') }}"
+      db_enable_agents: "{{ lookup('csvfile', 'dbservers file=gamma.csv delimiter=, col=2') }}"
+
+  tasks:
+    - name: Enable WS ports
+      debug:
+          msg: "enable ports for ws"
+      when: "ws_enable_ports | bool"
+
+    - name: Enable DB ports
+      debug:
+          msg: "enable ports for db"
+      when: "db_enable_ports | bool"      
+
+    - name: Enable WS agents
+      debug:
+          msg: "enable agents for ws"
+      when: "ws_enable_agents | bool"
+
+    - name: Enable DB agents
+      debug:
+          msg: "enable agents for db"
+      when: "db_enable_agents | bool"            

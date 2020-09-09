@@ -1,0 +1,48 @@
+---
+- name: uri lunch
+  hosts: localhost
+  vars:
+      toweruser: test
+      towerpass: test
+      towerhost: 192.168.1.23
+      towerproject: 10
+      towerjob: 11
+  tasks:
+    - name: kick off project sync
+      uri:
+        url:  "https://{{towerhost}}/api/v2/projects/{{towerproject}}/update/"
+        method: POST
+        user: "{{toweruser}}"
+        password: "{{towerpass}}"
+        validate_certs: False
+        force_basic_auth: yes
+        status_code:
+          - 200
+          - 201
+          - 202
+      register: response
+      changed_when: response.status == 202
+
+    - name: start job template
+      uri:
+        url:  "https://{{towerhost}}/api/v2/job_templates/{{towerjob}}/launch/"
+        method: POST
+        user: "{{toweruser}}"
+        password: "{{towerpass}}"
+        validate_certs: False
+        force_basic_auth: yes
+        status_code:
+          - 200
+          - 201
+          - 202
+      register: response
+      changed_when: response.status == 201
+
+    - name: start job using tower module
+      tower_job_launch:
+        job_template: "ping"
+        tower_host: "{{towerhost}}"
+        tower_username: "{{toweruser}}"
+        tower_password: "{{towerpass}}"
+
+    

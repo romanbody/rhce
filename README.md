@@ -11,7 +11,7 @@
     - [Using wilter with  network address](#using-wilter-with-network-address)
   - [Delegation](#delegation)
   - [Dynamic inventory](#dynamic-inventory)
-  - [Lunch job with API](#lunch-job-with-api)
+  - [Launch job with API](#launch-job-with-api)
 
 # EX284 preparation 
 RHCE preparation files
@@ -155,56 +155,75 @@ Create new rolling_update.yml file, with folowing steps:
 4. take server back to pool
 
 ## Dynamic inventory
-https://docs.ansible.com/ansible/latest/dev_guide/developing_inventory.html#inventory-source-common-format
+
+Docs: https://docs.ansible.com/ansible/latest/dev_guide/developing_inventory.html#inventory-source-common-format
+
+Implement python file with dynamic inventory (inventory4.py) to sample structure of iunventory with webservers and proxy. Include also some vars, e.g. remote_user. 
+Use such file also as dynamic inventory with ansible tower deployment.
+
+Also can be used in ansible command or with playbook:
+
+    ansible -i inventory4.py all -m ping 
+
 
 Example:
-#!/usr/bin/env python
 
-from subprocess import Popen, PIPE
-import sys
-import json
+    #!/usr/bin/env python
 
-result = {}
-result['all'] = {}
+    from subprocess import Popen, PIPE
+    import sys
+    import json
 
-result['all']['hosts'] = ['localhost']
-result['all']['vars'] = {}
+    result = {}
+    result['all'] = {}
 
-if len(sys.argv) == 2 and sys.argv[1] == '--list':
-    print(json.dumps(result))
-elif len(sys.argv) == 3 and sys.argv[1] == '--host':
-    print(json.dumps({'ansible_connection': 'jail'}))
-else:
-    sys.stderr.write("Need an argument, either --list or --host <host>\n")
+    result['all']['hosts'] = ['localhost']
+    result['all']['vars'] = {}
 
-## Lunch job with API
-https://docs.ansible.com/ansible-tower/2.4.5/html/towerapi/intro.html
+    if len(sys.argv) == 2 and sys.argv[1] == '--list':
+        print(json.dumps(result))
+    elif len(sys.argv) == 3 and sys.argv[1] == '--host':
+        print(json.dumps({'ansible_connection': 'jail'}))
+    else:
+        sys.stderr.write("Need an argument, either --list or --host <host>\n")
 
-https://172.17.53.212/api/
+Example of dynamic inventory using mysql:
+https://github.com/askdaddy/ansible-dynamic-inventory-mysql/blob/arya/inventory.py
 
-Get info about to run
-https://172.17.53.212/api/v2/job_templates/11/launch/
+## Launch job with API
 
-https://www.ansible.com/blog/getting-started-ansible-towers-api
-- name: kick off project sync
-  uri:
-    url:  https://localhost/api/v1/projects/7/update/
-    method: POST
-    user: admin
-    password: "{{ towerpass }}"
-    validate_certs: False
-    status_code:
-      - 200
-      - 201
-      - 202
-  when: response.status == 201
+Docs: https://docs.ansible.com/ansible-tower/2.4.5/html/towerapi/intro.html
 
-From <https://www.ansible.com/blog/getting-started-ansible-towers-api> 
+Get info about to run: https://192.168.1.23/api/v2/job_templates/11/launch/
 
-name: kick off the provisioning job template
-  shell:  "curl -f -H 'Content-Type: application/json' -XPOST --user 
-admin:{{ towerpass }} 
-https://172.16.2.42/api/v2/job_templates/8/launch/ --insecure"
-  when: inventory_hostname == 'demovm4'
+Create playbook uri_launch.yml to launch project update (e.g. project 10) and start job template  (e.g. id 11) on your tower host.
 
-From <https://www.ansible.com/blog/getting-started-ansible-towers-api> 
+example:
+
+
+    - name: start job template
+      uri:
+        url:  "https://{{towerhost}}/api/v2/job_templates/{{towerjob}}/launch/"
+        method: POST
+        user: "{{toweruser}}"
+        password: "{{towerpass}}"
+        validate_certs: False
+        force_basic_auth: yes
+        status_code:
+          - 200
+          - 201
+          - 202
+      register: response
+      changed_when: response.status == 201
+
+More examples: https://www.ansible.com/blog/getting-started-ansible-towers-api
+
+e.g.
+
+    name: kick off the provisioning job template
+      shell:  "curl -f -H 'Content-Type: application/json' -XPOST --user 
+    admin:{{ towerpass }} 
+    https://192.168.1.23/api/v2/job_templates/11/launch/ --insecure"
+      when: inventory_hostname == 'demovm4'
+
+

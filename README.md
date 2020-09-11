@@ -5,7 +5,7 @@
   - [Git](#git)
   - [Manage inventory variables](#manage-inventory-variables)
   - [Lookup](#lookup)
-    - [Lookiup in CSV](#lookiup-in-csv)
+    - [Lookup in CSV](#lookup-in-csv)
   - [Filters and testing and network](#filters-and-testing-and-network)
     - [Create users based on json, using filters](#create-users-based-on-json-using-filters)
     - [Using wilter with  network address](#using-wilter-with-network-address)
@@ -51,7 +51,7 @@ Define variables based on:
 * groups
 * hosts 
 
-Hosts in webserer group will use following variable with list of packages:
+Hosts in webserver group will use following variable with list of packages:
 * req_packages
   * httpd
 
@@ -82,7 +82,7 @@ Use special variables:
 
 https://liquidat.wordpress.com/2016/02/09/howto-looking-up-external-directories-in-ansible/
 
-### Lookiup in CSV
+### Lookup in CSV
 
 Use following CSV sample file: gamma.csv
 groupname,port,enabled
@@ -148,7 +148,7 @@ Show public network IPV4 address , use ip filter
 
 Docs: https://docs.ansible.com/ansible/latest/user_guide/playbooks_delegation.html
 
-Create new rolling_update.yml file, with folowing steps:
+Create new rolling_update.yml file, with following steps:
 
 1. run activity on 50% of webservers
 2. take out these servers from proxy pool (user any list, e.g /etc/serverlist )

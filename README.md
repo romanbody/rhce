@@ -108,6 +108,7 @@ https://docs.ansible.com/ansible/latest/user_guide/playbooks_tests.html
 https://docs.ansible.com/ansible/latest/user_guide/playbooks_filters_ipaddr.html
 
 ### Create users based on json, using filters
+Create filter_users.yml file.
 
 Use following variable:
 

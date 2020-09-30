@@ -1,3 +1,6 @@
+ansible_connection: ssh
+remote_user: ansible
+
 group_var1: group variable
 group_var_list:
   - userName: roman

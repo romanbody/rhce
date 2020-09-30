@@ -8,7 +8,7 @@
     - [Lookup in CSV](#lookup-in-csv)
   - [Filters and testing and network](#filters-and-testing-and-network)
     - [Create users based on json, using filters](#create-users-based-on-json-using-filters)
-    - [Using wilter with  network address](#using-wilter-with-network-address)
+    - [Using filter with  network address](#using-filter-with-network-address)
   - [Delegation](#delegation)
   - [Dynamic inventory](#dynamic-inventory)
   - [Launch job with API](#launch-job-with-api)
@@ -48,7 +48,7 @@ With groups:
 
 
 Define variables based on:
-* groups
+* groups 
 * hosts 
 
 Hosts in webserver group will use following variable with list of packages:
@@ -139,7 +139,7 @@ Use following variable:
 
 Create users on ws or db servers based on groups. Use filter function and lookup.
 
-### Using wilter with  network address
+### Using filter with  network address
 
 Show public network IPV4 address , use ip filter 
 
@@ -159,7 +159,7 @@ Create new rolling_update.yml file, with following steps:
 
 Docs: https://docs.ansible.com/ansible/latest/dev_guide/developing_inventory.html#inventory-source-common-format
 
-Implement python file with dynamic inventory (inventory4.py) to sample structure of iunventory with webservers and proxy. Include also some vars, e.g. remote_user. 
+Implement python file with dynamic inventory (inventory4.py) to sample structure of inventory with webservers and proxy. Include also some vars, e.g. remote_user. 
 Use such file also as dynamic inventory with ansible tower deployment.
 
 Also can be used in ansible command or with playbook:

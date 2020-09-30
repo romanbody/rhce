@@ -15,7 +15,7 @@ result['webservers']['hosts'] = ['ansible1','ansible2']
 result['webservers']['vars'] = {}
 
 result['proxy'] = {}
-result['proxy']['hosts'] = ['ansible3']
+result['proxy']['hosts'] = ['ansible3','localhost']
 result['proxy']['vars'] = {}
 
 

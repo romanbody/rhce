@@ -11,5 +11,5 @@
     copy:
       dest: /etc/motd
       content: "Welcome to proxy server."
-    when: "'proxy' in {{group_names}}"
+    when: "'proxy' in group_names"
 

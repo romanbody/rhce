@@ -1,5 +1,5 @@
 - name: transform data with filters and plugins
   hosts: web1
   tasks:
-    - debug: msg=Hallo
+    - debug: msg="{{ motd1 }}"
    

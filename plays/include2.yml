@@ -1,0 +1,10 @@
+- name: set fac include 2
+  set_fact:
+    outer_item: "{{item}}"
+- name: save lines include2
+  lineinfile:
+    path: /root/iplist
+    line: "{{item}}"
+    state: present
+  loop: "{{outer_item | regex_findall('\\b(?:[0-9]{1,3}\\.){3}[0-9]{1,3}\\b')  }}"
+

@@ -1,0 +1,29 @@
+- name: test files
+  hosts: localhost
+  gather_facts: no
+  vars_files:
+    - test_files.yml
+  tasks:
+    - name: create file
+      copy:
+        content: ""
+        dest: /root/iplist
+
+    - name: use include
+      include: include.yml
+      loop: "{{files}}"
+
+    - name: init var
+      set_fact: 
+        mycustomlines: [] 
+
+    - name: work with list
+      set_fact:
+        mycustomlines: "{{mycustomlines}} + {{lookup('file',item).splitlines()|list}} "
+        #mycustomlines: "{{mycustomlines}} + ['{{item}}']"
+      with_items: "{{files}}"
+
+    - name: show lines
+      debug:
+        msg: "{{item | regex_findall('\\b(?:[0-9]{1,3}\\.){3}[0-9]{1,3}\\b') }}"
+      loop: "{{mycustomlines}}"

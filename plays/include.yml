@@ -1,0 +1,12 @@
+- name: fact outer
+  set_fact:
+    outer_item: "{{item}}"
+
+- name: set fact include 1
+  set_fact:
+    mylines: "{{ lookup('file',outer_item).splitlines() }}"                                                                 
+
+- name: save lines
+  include: include2.yml
+  loop: "{{mylines}}"
+
